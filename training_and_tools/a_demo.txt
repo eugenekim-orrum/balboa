@@ -9,3 +9,8 @@ dbt-osmosis diff  –model base_cases
 curl http://localhost:8581/health
 curl localhost:8581/parse?reset=true
 
+
+# DUCK db
+pip install dbt-duckdb
+cp ~/.dbt/profiles.yml.duck ~/.dbt/profiles.yml
+pip install dbt-duckdb

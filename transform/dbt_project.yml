@@ -10,7 +10,8 @@ config-version: 2
 require-dbt-version: ">=1.1.0"
 
 # This setting configures which "profile" dbt uses for this project.
-profile: 'default'
+# profile: 'default'
+profile: 'duckdb'
 
 # These configurations specify where dbt should look for different types of files.
 # The `source-paths` config, for example, states that models in this project can be
@@ -58,9 +59,16 @@ snapshots:
 
 models:
   balboa:
-    materialized: view
-    +schema: z_schema_not_configured
+    # materialized: view
+    # +schema: z_schema_not_configured
 
+    +materialized: table
+    +pre-hook:
+      - install 'httpfs'
+      - load 'httpfs'
+    +post-hook:
+      - export database 'database' (format parquet)
+      
     inlets:
       account_usage:
         +schema: inlet_account_usage
