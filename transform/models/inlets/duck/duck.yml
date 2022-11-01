@@ -1,10 +1,10 @@
 version: 2
 sources:
   - name: main
+    schema: ''
     tables:
       - name: loans
-        external:
-          location: https://datacoves-sample-data-public.s3.us-west-2.amazonaws.com/PERSONAL_LOANS.csv
+        identifier: read_csv_auto('https://datacoves-sample-data-public.s3.us-west-2.amazonaws.com/PERSONAL_LOANS.csv')
 
 # version: 2
 
