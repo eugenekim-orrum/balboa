@@ -1,2 +1,3 @@
 select *
-from {{ source('main', 'loans') }}
+from {{ source('loans', 'PERSONAL_LOANS') }}
+limit 5

@@ -1,0 +1,7 @@
+version: 2
+sources:
+  - name: loans
+    meta:
+      external_location: 'https://datacoves-sample-data-public.s3.us-west-2.amazonaws.com/{name}.csv'
+    tables:
+      - name: PERSONAL_LOANS
