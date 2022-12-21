@@ -24,7 +24,7 @@ def ms_teams_send_logs(context):
         task_id="msteams_notify_failure", trigger_rule="all_done",
         message="`{}` has failed on task: `{}`".format(dag_id, task_id),
         button_text="View log", button_url=logs_url,
-        theme_color="FF0000", http_conn_id='ms-teams-notifications')
+        theme_color="FF0000", http_conn_id='MSTEAMS_NOTIFICATIONS')
 
     ms_teams_notification.execute(context)
 
