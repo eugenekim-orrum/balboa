@@ -10,7 +10,7 @@ from kubernetes.client import models as k8s
 
 default_args = {
     'owner': 'airflow',
-    'email': 'sebastian@convexa.ai',
+    'email': 'antonellinibruno@gmail.com',
     'email_on_failure': True
 }
 
@@ -33,15 +33,9 @@ with DAG(
         ),
     }
 
-    task_x = BashOperator(
-        task_id="bash_executor_config",
-        executor_config=executor_config_template,
-        bash_command="echo SUCCESS",
-    )
-    
     fail = BashOperator(
         task_id='failing',
         bash_command="dates"
     )
 
-    task_x >> fail
+    fail
