@@ -8,10 +8,29 @@ from airflow.operators.bash import BashOperator
 
 from kubernetes.client import models as k8s
 
+
+AIRFLOW_BASE_URL = os.environ.get("AIRFLOW__WEBSERVER__BASE_URL")
+
+def ms_teams_send_logs(context):
+    dag_id = context["dag_run"].dag_id
+    task_id = context["task_instance"].task_id
+    context["task_instance"].xcom_push(key=dag_id, value=True)
+    timestamp = urllib.parse.quote(context['ts'])
+
+    logs_url = f"{AIRFLOW_BASE_URL}/log?dag_id={dag_id}&task_id={task_id}&execution_date={timestamp}"
+    ms_teams_notification = MSTeamsWebhookOperator(
+        task_id="msteams_notify_failure", trigger_rule="all_done",
+        message="`{}` has failed on task: `{}`".format(dag_id, task_id),
+        button_text="View log", button_url=logs_url,
+        theme_color="FF0000", http_conn_id='ms-teams-notifications')
+
+    ms_teams_notification.execute(context)
+
 default_args = {
-    'owner': 'airflow',
-    'email': 'antonellinibruno@gmail.com',
-    'email_on_failure': True
+    'owner' : 'airflow',
+    'description' : 'a test dag',
+    'start_date' : datetime(2019,8,8),
+    'on_failure_callback': ms_teams_send_logs # IMPORTANT: it's the reference to the method, do not call() it
 }
 
 with DAG(
