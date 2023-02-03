@@ -60,7 +60,7 @@ unwrap_wrapped_queries = True
 [sqlfluff:rules:L003]
 indent_unit = space
 tab_space_size = 4
-hanging_indents: false
+hanging_indents = false
 
 [sqlfluff:rules:L007]  # Operator before/after new line
 layout:type:binary_operator:line_position = leading
